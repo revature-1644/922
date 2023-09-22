@@ -1,3 +1,6 @@
---h2 is typically used to setup a test database, not a prod database.
---first, drop your tables (to reset your database for testing)
---then create your tables
+drop table flight if exists;
+create table flight (flight_id int primary key, departure_city varchar(255), arrival_city varchar(255));
+insert into flight (flight_id, departure_city, arrival_city) values
+(1111, 'tampa', 'new york city'),
+(2222, 'new york city', 'philadelphia'),
+(3333, 'philadelphia', 'denver');
