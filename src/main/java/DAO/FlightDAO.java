@@ -76,5 +76,19 @@ public class FlightDAO {
         }
         return null;
     }
+    /**
+     * update a arrival city for a particular flight
+     */
+    public void updateArrivalCity(int flightId, String arrivalCity){
+        try{
+            PreparedStatement ps = conn.prepareStatement("update flight set arrival_city = ? where flight_id = ?");
+
+            ps.setString(1, arrivalCity);
+            ps.setInt(2, flightId);
+            ps.executeUpdate();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
 
 }

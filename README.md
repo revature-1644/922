@@ -57,3 +57,55 @@ All of these endpoints, in the real world, would also check an encrypted token t
 the user is allowed to access this endpoint...
 
 for now, don't worry about security.
+
+"sublanguages" is the concept that groups of commands within SQL are their own languages
+DDL - Data definition language - create table / alter table
+DQL - Data query language - select
+DML - Data modification language - insert / delete / update
+DCL - Data control language - grant / create roles
+TCL - Transaction control language - commit - "all or nothing" grouping of sql statements
+
+ACID
+
+a join combines two different tables into a single result set when a value matches
+"inner/outer"
+inner - excludes results where one of the tables does not have a matching value
+outer - includes a single null values when one of the tables has a matching value
+"left/right/full"
+left - prioritizes the left table, where null values for the left table are excluded
+right - same, but for right tables
+full - null values for either side are included
+"cross join" produces every possible combination of items between two tables (cartesian product)
+if we have a product and store table, a cross join would produce a result of every possible product
+a store could sell
+
+in most cases, if you just want to match primary/foreign keys, you're just using an inner join
+something like an outer join is especially useful when we want to find 'store that does NOT sell
+this product' or the 'artist that did NOT paint any paintings' - because we have access to the single
+null value
+
+let's say we did a full outer join between artists and paintings
+ so, that would retrieve both 1) artists that have no related paintings, so the artist
+ would have a single entry with a null set of values for 'painting'
+ 2) paintings that have a null foreign key to artist table, so no related artist could be found
+
+ maybe we're building a service that allows museum managers to correlate paintings and artists- so,
+ we want to build a system that retrieves the as-of-yet unmapped paintings/artists
+ 
+constraints are additional rules applied to the table
+EG, primary key / foreign key both represent constraints - primary key non-null, unique
+foreign keys have referential integrity constraints
+UNIQUE, NON NULL, CHECK 
+
+website.com/api/v1/noun/any other noun
+flights.com/api/v2/city/tampa
+flights.com/api/v3/flight/01846?queryVar=city=tampa
+flights.com/api/v3/flight?departingCity=tampa
+flight.com/api/v3/airline/delta/flight
+flight.com/api/v3/airline/123/flight
+flight.com/api/v3/flight?airline=delta
+HTTP request
+-verb (action)
+URI
+headers (metadata/intended to be secure)
+body (is also secure, but used more for structured data)

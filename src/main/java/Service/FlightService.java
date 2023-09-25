@@ -25,6 +25,26 @@ public class FlightService implements iFlightService{
 
         return f;
     }
+
+    /**
+     * Set all flight with a particular arrival city to a new arrival city.
+     * @param oldArrivalCity
+     * @param newArrivalCity
+     */
+    public void resetArrivalCities(String oldArrivalCity, String newArrivalCity){
+//        first, query all flights.
+//        then, loop through to find the flights with a particular arrival city.
+//        grab their id's.
+//        change their arrival cities individually.
+        List<Flight> flights = flightDAO.queryAllFlight();
+        for(int i  = 0; i < flights.size(); i++){
+//            if the specific flight in the list has an arrival city name equal to my parameter
+            if(flights.get(i).getArrivalCity().equals(oldArrivalCity)){
+//                grab the current flight's random id, and set its arrival city
+                flightDAO.updateArrivalCity(flights.get(i).getFlightId(), newArrivalCity);
+            }
+        }
+    }
     public List<Flight> getAllFlights(){
         return flightDAO.queryAllFlight();
     }
