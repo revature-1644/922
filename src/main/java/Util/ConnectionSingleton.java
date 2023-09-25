@@ -46,7 +46,6 @@ public class ConnectionSingleton {
                 e.printStackTrace();
             }
         }
-
         return connection;
     }
     /**
