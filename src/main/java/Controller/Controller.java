@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -28,9 +29,18 @@ public class Controller {
 
         return app;
     }
-
+    //if there is no query param, get all flights.
+    //if there is a "aggregateBy" qparam, then I will return all flights from the most commonly departed-from city, if
+    //    there is the value "mostCommonlyDepartedCity"
+    //
     private void getAllFlightHandler(Context context){
-        List<Flight> flightList = flightService.getAllFlights();
+        String queryParamAggregateBy = context.queryParam("aggregateBy");
+        List<Flight> flightList = new ArrayList<>();
+        if(queryParamAggregateBy == null){
+            flightList = flightService.getAllFlights();
+        }else if(queryParamAggregateBy.equals("mostCommonlyDepartedCity")){
+            flightList = flightService.getFlightsFromMostCommonlyDepartedCity();
+        }
         context.json(flightList);
     }
     private void getFlightByIdHandler(Context context){

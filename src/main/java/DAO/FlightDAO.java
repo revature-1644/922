@@ -2,12 +2,12 @@ package DAO;
 
 import Model.Flight;
 
+import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class FlightDAO {
     Connection conn;
@@ -91,4 +91,39 @@ public class FlightDAO {
         }
     }
 
+    /**
+     * get the counts of how many times every departure city was present in the db
+     */
+    public Map<String, Integer> getDepartureCounts(){
+        Map<String, Integer> departureCityCountMap = new HashMap<>();
+        try{
+            PreparedStatement ps = conn.prepareStatement("select departure_city, count(departure_city) as num_times_appeared from flight group by departure_city");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                departureCityCountMap.put(rs.getString("departure_city"), rs.getInt("num_times_appeared"));
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return departureCityCountMap;
+    }
+
+    public List<Flight> queryFlightByDepartureCity(String departureCity) {
+        List<Flight> flightList = new ArrayList<>();
+        try{
+            PreparedStatement ps = conn.prepareStatement("select * from flight where departure_city = ?");
+            ps.setString(1, departureCity);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                int dbFlightId = rs.getInt("flight_id");
+                String dbDepartureCity = rs.getString("departure_city");
+                String dbArrivalCity = rs.getString("arrival_city");
+                Flight dbFlight = new Flight(dbFlightId, dbDepartureCity, dbArrivalCity);
+                flightList.add(dbFlight);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return flightList;
+    }
 }

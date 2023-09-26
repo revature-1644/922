@@ -3,4 +3,6 @@ create table flight (flight_id int primary key, departure_city varchar(255), arr
 insert into flight (flight_id, departure_city, arrival_city) values
 (1111, 'tampa', 'new york city'),
 (2222, 'new york city', 'philadelphia'),
-(3333, 'philadelphia', 'denver');
+(3333, 'philadelphia', 'denver'),
+(2223, 'tampa', 'philadelphia'),
+(3334, 'tampa', 'denver');
